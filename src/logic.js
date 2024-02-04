@@ -5,7 +5,7 @@ export class Notebook {
     }
     addNote(title, description, dueDate, priority, projectID) {
         this.projects[projectID].addNote(Note.id);
-        this.notes.push(new Note(date, textContent));
+        this.notes.push(new Note(title, description, dueDate, priority));
 
     }
     addProject(projectName) {
@@ -31,7 +31,7 @@ class Note {
         Note.id++;
         this.isComplete = false;
     }
-    print(params) {
+    print() {
         console.log(this);
     }
 }
