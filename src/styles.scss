@@ -1,5 +1,44 @@
 $body-color: red;
 
+div {
+    display: flex;
+
+}
+
 body {
-    color: $body-color;
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-content: stretch;
+
+    #body-header {
+        height: 50px;
+        background-color: blue;
+
+    }
+
+    #body-content {
+        flex-grow: 1;
+        justify-content: stretch;
+
+        #left-panel {
+            flex-grow: 0;
+            width: 300px;
+            background-color: red;
+        }
+
+        #right-panel {
+            flex-grow: 1;
+            background-color: pink;
+        }
+    }
+
+    #footer {
+        align-self: flex-end;
+        height: 20px;
+        width: 100vw;
+    }
 }
