@@ -30,6 +30,9 @@ export class Notebook {
     test() {
         console.log('dupa');
     }
+    removeProject(projectID) {
+        this.projects.splice(projectID, 1);
+    }
 }
 
 
@@ -56,7 +59,7 @@ class Project {
     static id = 0;
 
     constructor(projectName) {
-        this.projectName = projectName;
+        this.name = projectName;
         this.notes = [];
 
         this.id = Project.id;
