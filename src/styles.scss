@@ -33,11 +33,16 @@ body {
             .project-card {
                 flex-direction: row;
             }
+
+            .project-active {
+                background-color: gray;
+            }
         }
 
         #right-panel {
             flex-grow: 1;
             background-color: pink;
+            flex-wrap: wrap;
         }
     }
 

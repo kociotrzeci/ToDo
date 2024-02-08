@@ -12,6 +12,13 @@ export class Display {
         this.notebook.projects.forEach(element => {
             const container = document.createElement('div')
             container.className = 'project-card';
+            if (element.id === this.selectedProject) container.className = 'project-card project-active';
+            else container.className = 'project-card';
+            container.addEventListener('click', () => {
+                this.selectedProject = element.id;
+                this.refreshRight();
+                this.refreshLeft();
+            })
             const name = document.createElement('p');
             const btn = document.createElement('button');
             btn.addEventListener('click', () => {
@@ -33,6 +40,7 @@ export class Display {
             this.right.removeChild(this.right.lastChild);
         }
         this.notebook.getNotesOfProject(this.selectedProject).forEach(element => {
+            console.log(element);
             const container = document.createElement('div')
             container.className = 'note-card ' + element.priority;
             const title = document.createElement('h4');
@@ -43,11 +51,10 @@ export class Display {
             title.className = 'note-title';
             const btn = document.createElement('button');
             btn.addEventListener('click', () => {
-                this.notebook.removeProject(element.id)
+                this.notebook.removeNote(element.id)
                 console.log(element.id);
                 this.refreshRight();
-            }
-            )
+            });
             btn.textContent = 'done';
             title.textContent = element.title;
             container.appendChild(title);

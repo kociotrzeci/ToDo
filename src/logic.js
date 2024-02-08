@@ -27,11 +27,16 @@ export class Notebook {
     markNoteAsDone(id) {
         this.notes[id].isComplete = true;
     }
-    test() {
-        console.log('dupa');
-    }
     removeProject(projectID) {
-        this.projects.splice(projectID, 1);
+        const ID = this.projects.map((project) => project.id).indexOf(projectID);
+        this.projects.splice(ID, 1);
+    }
+    removeNote(_noteID) {
+        const noteID = this.notes.map((note => note.id)).indexOf(_noteID);
+        const projectID = this.projects.map((project) => project.id).indexOf(this.notes[noteID].project);
+        const noteInProjectID = this.projects[projectID].notes.findIndex(note => note.id === _noteID);
+        this.notes.splice(noteID, 1);
+        this.projects[projectID].notes.splice(noteInProjectID, 1);
     }
 }
 
@@ -52,7 +57,6 @@ class Note {
     print() {
         console.log(this);
     }
-
 }
 
 class Project {
