@@ -23,3 +23,4 @@ notebook.addNote('title5', 'desc', '2024-10-20', 1, 1);
 notebook.addNote('title6', 'desc', '2024-10-20', 1, 1);
 display.refreshLeft();
 display.refreshRight();
+display.form();

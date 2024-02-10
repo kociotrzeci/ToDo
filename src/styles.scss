@@ -51,4 +51,78 @@ body {
         height: 20px;
         width: 100vw;
     }
+
+    .backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000; // Ensures it's above other content
+
+        // Apply multiple backdrop filters
+        background-color: rgba(0, 0, 0, 0.116); // Semi-transparent black
+        backdrop-filter: blur(5px) // Adds blur and grayscale effects
+    }
+
+
+
+
+    .popup-form {
+        position: fixed;
+        flex-direction: column;
+        top: 50%; // Center vertically
+        left: 50%; // Center horizontally
+        transform: translate(-50%, -50%); // Center the form
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        z-index: 1001; // Ensures it's above the backdrop
+
+        form {
+            .form-group {
+                margin-bottom: 15px;
+
+                label {
+                    display: block;
+                    margin-bottom: 5px;
+                }
+
+                input[type="text"],
+                input[type="date"],
+                select {
+                    width: 100%;
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    box-sizing: border-box;
+                }
+
+                .radio-group {
+                    input[type="radio"] {
+                        margin-right: 5px;
+                    }
+
+                    label {
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+            button[type="submit"] {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
+        }
+    }
 }
