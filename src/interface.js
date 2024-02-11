@@ -35,7 +35,11 @@ export class Display {
             container.appendChild(btn);
             this.left.appendChild(container);
         });
-
+        const btn = document.createElement('button');
+        btn.addEventListener('click', (event) => {
+            this.createForm(projectForm);
+        })
+        this.left.appendChild(btn);
     }
     refreshRight() {
         while (this.right.lastChild) {
@@ -59,18 +63,25 @@ export class Display {
             });
             btn.textContent = 'done';
             title.textContent = element.title;
+            dueDate.textContent = element.dueDate;
+            priority.textContent = element.priority;
             container.appendChild(title);
+            container.appendChild(priority);
+            container.appendChild(dueDate);
             container.appendChild(btn);
             this.right.appendChild(container);
         })
-
-
+        const btn = document.createElement('button');
+        btn.addEventListener('click', (event) => {
+            this.createForm(noteForm);
+        })
+        this.right.appendChild(btn);
     }
     text() {
         this.notebook.test();
     }
     form() {
-        this.createForm(projectForm);
+        this.createForm(noteForm);
     }
     createForm(input) {
         const formContainer = document.createElement('div');
@@ -94,25 +105,57 @@ export class Display {
                     optionElement.textContent = option.label;
                     select.appendChild(optionElement);
                 });
-                div.appendChild(select); // Append the select element to the form group div
+                div.appendChild(select);
             }
             else {
-                const inputElement = document.createElement('input'); // Rename the variable to avoid conflict
+                const inputElement = document.createElement('input');
                 inputElement.type = element.type;
                 inputElement.id = key;
-                div.appendChild(inputElement); // Append the input element to the form group div
+                div.appendChild(inputElement);
             }
-            formContainer.appendChild(div); // Append the form group div to the form container
+            formContainer.appendChild(div);
         }
         const submitButton = document.createElement('button');
         submitButton.type = 'submit';
         submitButton.textContent = 'Submit';
+        submitButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            const formData = {};
+            const formInputs = formContainer.querySelectorAll('.form-group input, .form-group select'); // Select all input and select elements within the form
+            formInputs.forEach(input => {
+                formData[input.id] = input.value;
+
+            })
+            console.log(formData);
+            this.submit(formData);
+            backdrop.remove();
+            formContainer.remove();
+        });
         formContainer.appendChild(submitButton);
         document.body.appendChild(backdrop);
         document.body.appendChild(formContainer);
     }
+    submit(formInput) {
+        if (formInput.title) {
+            this.notebook.addNote(formInput.title, formInput.description, formInput.dueDate, formInput.optionsRadio, this.selectedProject);
+            this.refreshRight();
+            this.refreshLeft();
+        }
+        if (formInput.name) {
+            console.log(formInput.name);
+            this.notebook.addProject(formInput.name);
+            this.refreshLeft();
+        }
+        this.hideForm();
+    }
+    hideForm() {
+        const backdrop = document.querySelector('.backdrop');
+        const formContainer = document.querySelector('.popup-form');
+        backdrop.remove();
+        formContainer.remove();
+    }
 
-}
+};
 
 const projectForm = {
     name: {
@@ -132,11 +175,12 @@ const noteForm = {
     },
     optionsRadio: {
         options: [
-            { value: 1, label: 'High' },
-            { value: 2, label: 'Medium' },
-            { value: 3, label: 'Low' }
+            { value: 'high', label: 'High' },
+            { value: 'medium', label: 'Medium' },
+            { value: 'low', label: 'Low' }
         ],
         label: 'Priority:'
 
     }
-}
+};
+

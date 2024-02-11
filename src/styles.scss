@@ -41,6 +41,7 @@ body {
 
         #right-panel {
             flex-grow: 1;
+            flex-direction: column;
             background-color: pink;
             flex-wrap: wrap;
         }
