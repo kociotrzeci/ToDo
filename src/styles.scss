@@ -1,5 +1,9 @@
 $body-color: red;
 
+
+
+
+
 div {
     display: flex;
 
@@ -30,8 +34,17 @@ body {
             width: 300px;
             background-color: red;
 
+            * {
+                height: 60px;
+                padding: 0;
+                margin: 0;
+            }
+
             .project-card {
-                flex-direction: row;
+                display: grid;
+                grid-template-columns: 3fr 1fr;
+                align-items: center;
+                width: 100%;
             }
 
             .project-active {
@@ -40,10 +53,34 @@ body {
         }
 
         #right-panel {
-            flex-grow: 1;
             flex-direction: column;
             background-color: pink;
             flex-wrap: wrap;
+            width: 100%;
+
+
+            .note-card {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                align-content: center;
+                height: 40px;
+                padding: 10px;
+                gap: 20px;
+                border-style: solid;
+                border-color: gray;
+                border-width: 1px;
+                margin: 1px;
+
+                * {
+                    padding: 0;
+                    margin: 0;
+
+                }
+            }
+
+            button.note-card {
+                height: 62px;
+            }
         }
     }
 
@@ -65,9 +102,6 @@ body {
         background-color: rgba(0, 0, 0, 0.116); // Semi-transparent black
         backdrop-filter: blur(5px) // Adds blur and grayscale effects
     }
-
-
-
 
     .popup-form {
         position: fixed;

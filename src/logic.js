@@ -1,3 +1,5 @@
+import _ from "date-fns"
+
 export class Notebook {
     constructor() {
         this.notes = [];
@@ -22,7 +24,8 @@ export class Notebook {
         this.projects[projectID].notes.forEach(element => {
             _notes.push(this.notes[element]);
         });
-        return _notes;
+
+        return _notes.sort((a, b) => b.priority - a.priority);
     }
     markNoteAsDone(id) {
         this.notes[id].isComplete = true;
@@ -44,10 +47,12 @@ export class Notebook {
 
 class Note {
     static id = 0;
+    static priorities = ['Low', 'Medium', 'High'];
     constructor(title, description, dueDate, priority, project) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
+        this.priorityLabel = Note.priorities[priority];
         this.priority = priority;
         this.project = project;
         this.id = Note.id;

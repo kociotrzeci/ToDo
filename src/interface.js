@@ -36,6 +36,8 @@ export class Display {
             this.left.appendChild(container);
         });
         const btn = document.createElement('button');
+        btn.textContent = 'Add Project';
+        btn.classList.add('add-project');
         btn.addEventListener('click', (event) => {
             this.createForm(projectForm);
         })
@@ -48,10 +50,10 @@ export class Display {
         this.notebook.getNotesOfProject(this.selectedProject).forEach(element => {
             console.log(element);
             const container = document.createElement('div')
-            container.className = 'note-card ' + element.priority;
+            container.className = 'note-card ' + element.priorityLabel;
             const title = document.createElement('h4');
             const priority = document.createElement('p')
-            priority.className = 'priority' + element.priority;
+            priority.className = 'priority-' + element.priorityLabel;
             const dueDate = document.createElement('p');
             dueDate.className = 'date';
             title.className = 'note-title';
@@ -64,7 +66,7 @@ export class Display {
             btn.textContent = 'done';
             title.textContent = element.title;
             dueDate.textContent = element.dueDate;
-            priority.textContent = element.priority;
+            priority.textContent = element.priorityLabel;
             container.appendChild(title);
             container.appendChild(priority);
             container.appendChild(dueDate);
@@ -72,6 +74,8 @@ export class Display {
             this.right.appendChild(container);
         })
         const btn = document.createElement('button');
+        btn.textContent = 'Add note';
+        btn.classList.add('note-card');
         btn.addEventListener('click', (event) => {
             this.createForm(noteForm);
         })
@@ -175,9 +179,9 @@ const noteForm = {
     },
     optionsRadio: {
         options: [
-            { value: 'high', label: 'High' },
-            { value: 'medium', label: 'Medium' },
-            { value: 'low', label: 'Low' }
+            { value: '2', label: 'High' },
+            { value: '1', label: 'Medium' },
+            { value: '0', label: 'Low' }
         ],
         label: 'Priority:'
 
