@@ -54,7 +54,7 @@ body {
 
         #right-panel {
             flex-direction: column;
-            background-color: pink;
+            background-color: ivory;
             flex-wrap: wrap;
             width: 100%;
 
@@ -76,6 +76,18 @@ body {
                     margin: 0;
 
                 }
+            }
+
+            .priority-High {
+                background-color: pink;
+            }
+
+            .priority-Medium {
+                background-color: rgb(169, 202, 169);
+            }
+
+            .priority-Low {
+                background-color: rgb(197, 197, 197);
             }
 
             button.note-card {
