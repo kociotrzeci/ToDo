@@ -2,8 +2,15 @@ import "date-fns"
 
 export class Notebook {
     constructor() {
-        this.notes = [];
-        this.projects = [];
+        console.log(localStorage.getItem('notebook.notes'));
+        if (localStorage.getItem('notebook.notes') === null || localStorage.getItem('notebook.projects') === null) {
+            this.notes = [];
+            this.projects = [];
+        }
+        else {
+            this.notes = JSON.parse(localStorage.getItem('notebook.notes'));
+            this.projects = JSON.parse(localStorage.getItem('notebook.projects'));
+        }
     }
     addNote(title, description, dueDate, priority, projectID) {
         this.projects[projectID].addNote(Note.id);
@@ -42,6 +49,16 @@ export class Notebook {
         this.notes.splice(noteID, 1);
         this.projects[projectID].notes.splice(noteInProjectID, 1);
     }
+    saveStorage() {
+        try {
+            localStorage.setItem('notebook.notes', JSON.stringify(this.notes));
+            localStorage.setItem('notebook.projects', JSON.stringify(this.projects));
+            console.log("Saved!");
+        } catch (error) {
+            console.error("Failed to save to localStorage:", error);
+        }
+    }
+
 }
 
 
