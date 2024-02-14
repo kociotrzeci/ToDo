@@ -1,4 +1,4 @@
-import _ from "date-fns"
+import "date-fns"
 
 export class Notebook {
     constructor() {
@@ -24,8 +24,9 @@ export class Notebook {
         this.projects[projectID].notes.forEach(element => {
             _notes.push(this.notes[element]);
         });
+        const _notesPriority = _notes.sort((a, b) => b.priority - a.priority);
 
-        return _notes.sort((a, b) => b.priority - a.priority);
+        return _notesPriority.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
     }
     markNoteAsDone(id) {
         this.notes[id].isComplete = true;
@@ -51,7 +52,8 @@ class Note {
     constructor(title, description, dueDate, priority, project) {
         this.title = title;
         this.description = description;
-        this.dueDate = dueDate;
+        this.dueDate = new Date(dueDate);
+        this.dateDisplay = this.dueDate.toLocaleDateString("pl-PL");
         this.priorityLabel = Note.priorities[priority];
         this.priority = priority;
         this.project = project;
