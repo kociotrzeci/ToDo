@@ -8,7 +8,6 @@ export class Display {
 
     }
     refreshLeft() {
-        console.log(this.refreshLeft.caller);
         while (this.left.lastChild) {
             this.left.removeChild(this.left.lastChild);
         }
@@ -45,6 +44,7 @@ export class Display {
         this.left.appendChild(btn);
     }
     refreshRight() {
+        console.trace();
         while (this.right.lastChild) {
             this.right.removeChild(this.right.lastChild);
         };

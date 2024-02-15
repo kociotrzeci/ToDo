@@ -2,12 +2,12 @@ import "date-fns"
 
 export class Notebook {
     constructor() {
-        console.log(localStorage.getItem('notebook.notes'));
+        console.log(localStorage.getItem('notes'));
         this.notes = [];
         this.projects = [];
-        if (localStorage.getItem('notebook.notes') != null) {
-            let _notes = JSON.parse(localStorage.getItem('notebook.notes') || '[]');
-            let _projects = JSON.parse(localStorage.getItem('notebook.projects') || '[]');
+        if (localStorage.getItem('note') != null) {
+            let _notes = JSON.parse(localStorage.getItem('note') || '[]');
+            let _projects = JSON.parse(localStorage.getItem('projects') || '[]');
             _projects.forEach(element => {
                 this.projects.push(new Project(element.name));
             });
@@ -58,8 +58,8 @@ export class Notebook {
         this.projects[projectID].notes.splice(noteInProjectID, 1);
     }
     saveStorage() {
-        localStorage.setItem('notebook.notes', JSON.stringify(this.notes));
-        localStorage.setItem('notebook.projects', JSON.stringify(this.projects));
+        localStorage.setItem('note', JSON.stringify(this.notes));
+        localStorage.setItem('projects', JSON.stringify(this.projects));
         console.log("Saved!");
     }
     addDummyContent() {
