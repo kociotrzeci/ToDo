@@ -3,13 +3,20 @@ import "date-fns"
 export class Notebook {
     constructor() {
         console.log(localStorage.getItem('notebook.notes'));
-        if (localStorage.getItem('notebook.notes') === null || localStorage.getItem('notebook.projects') === null) {
-            this.notes = [];
-            this.projects = [];
+        this.notes = [];
+        this.projects = [];
+        if (localStorage.getItem('notebook.notes') != null) {
+            let _notes = JSON.parse(localStorage.getItem('notebook.notes') || '[]');
+            let _projects = JSON.parse(localStorage.getItem('notebook.projects') || '[]');
+            _projects.forEach(element => {
+                this.projects.push(new Project(element.name));
+            });
+            _notes.forEach(element => {
+                this.notes.push(new Note(element.title, element.description, element.dueDate, element.priority, element.projectID));
+            });
         }
         else {
-            this.notes = JSON.parse(localStorage.getItem('notebook.notes'));
-            this.projects = JSON.parse(localStorage.getItem('notebook.projects'));
+            this.addDummyContent();
         }
     }
     addNote(title, description, dueDate, priority, projectID) {
@@ -27,6 +34,7 @@ export class Notebook {
         return (this.projects);
     }
     getNotesOfProject(projectID) {
+        if (this.projects[projectID] === undefined) { return }
         const _notes = []
         this.projects[projectID].notes.forEach(element => {
             _notes.push(this.notes[element]);
@@ -50,18 +58,31 @@ export class Notebook {
         this.projects[projectID].notes.splice(noteInProjectID, 1);
     }
     saveStorage() {
-        try {
-            localStorage.setItem('notebook.notes', JSON.stringify(this.notes));
-            localStorage.setItem('notebook.projects', JSON.stringify(this.projects));
-            console.log("Saved!");
-        } catch (error) {
-            console.error("Failed to save to localStorage:", error);
-        }
+        localStorage.setItem('notebook.notes', JSON.stringify(this.notes));
+        localStorage.setItem('notebook.projects', JSON.stringify(this.projects));
+        console.log("Saved!");
+    }
+    addDummyContent() {
+        this.addProject('Project 1');
+        this.addProject('Project 2');
+        this.addNote('title0', 'desc', '2024-10-20', '0', 0);
+        this.addNote('title1', 'desc', '2024-10-21', '2', 0);
+        this.addNote('title2', 'desc', '2024-10-22', '2', 0);
+        this.addNote('title3', 'desc', '2024-10-22', '1', 0);
+        this.addNote('title4', 'desc', '2024-10-23', '0', 0);
+        this.addNote('title5', 'desc', '2024-10-21', '0', 0);
+        this.addNote('title6', 'desc', '2024-10-20', '1', 0);
+        this.addNote('title2', 'desc', '2024-10-23', '1', 0);
+        this.addNote('title3', 'desc', '2024-10-22', '2', 1);
+        this.addNote('title4', 'desc', '2024-10-20', '1', 1);
+        this.addNote('title5', 'desc', '2024-10-21', '0', 1);
+        this.addNote('title6', 'desc', '2024-10-20', '0', 1);
+        console.log('NOTES:');
+        console.log(this.projects[0].notes);
+        console.log(this.notes);
     }
 
 }
-
-
 
 class Note {
     static id = 0;
@@ -77,9 +98,6 @@ class Note {
         this.id = Note.id;
         Note.id++;
         this.isComplete = false;
-    }
-    print() {
-        console.log(this);
     }
 }
 

@@ -8,6 +8,7 @@ export class Display {
 
     }
     refreshLeft() {
+        console.log(this.refreshLeft.caller);
         while (this.left.lastChild) {
             this.left.removeChild(this.left.lastChild);
         }
@@ -42,45 +43,19 @@ export class Display {
             this.createForm(projectForm);
         })
         this.left.appendChild(btn);
-        this.notebook.saveStorage();
     }
     refreshRight() {
         while (this.right.lastChild) {
             this.right.removeChild(this.right.lastChild);
-        }
-        this.notebook.getNotesOfProject(this.selectedProject).forEach(element => {
-            console.log(element);
-            const container = document.createElement('div')
-            container.className = 'note-card priority-' + element.priorityLabel;
-            const title = document.createElement('h4');
-            const priority = document.createElement('p')
-            const dueDate = document.createElement('p');
-            dueDate.className = 'date';
-            title.className = 'note-title';
-            const btn = document.createElement('button');
-            btn.addEventListener('click', () => {
-                this.notebook.removeNote(element.id)
-                console.log(element.id);
-                this.refreshRight();
-            });
-            btn.textContent = 'done';
-            title.textContent = element.title;
-            dueDate.textContent = element.dateDisplay;
-            priority.textContent = element.priorityLabel;
-            container.appendChild(title);
-            container.appendChild(priority);
-            container.appendChild(dueDate);
-            container.appendChild(btn);
-            this.right.appendChild(container);
-        })
+        };
+        this.displayNotes();
         const btn = document.createElement('button');
         btn.textContent = 'Add note';
         btn.classList.add('note-card');
         btn.addEventListener('click', (event) => {
             this.createForm(noteForm);
-        })
+        });
         this.right.appendChild(btn);
-        this.notebook.saveStorage();
     }
     text() {
         this.notebook.test();
@@ -158,6 +133,32 @@ export class Display {
         const formContainer = document.querySelector('.popup-form');
         backdrop.remove();
         formContainer.remove();
+    }
+    displayNotes() {
+        this.notebook.getNotesOfProject(this.selectedProject).forEach(element => {
+            const container = document.createElement('div')
+            container.className = 'note-card priority-' + element.priorityLabel;
+            const title = document.createElement('h4');
+            const priority = document.createElement('p')
+            const dueDate = document.createElement('p');
+            dueDate.className = 'date';
+            title.className = 'note-title';
+            const btn = document.createElement('button');
+            btn.addEventListener('click', () => {
+                this.notebook.removeNote(element.id)
+                console.log(element.id);
+                this.refreshRight();
+            });
+            btn.textContent = 'done';
+            title.textContent = element.title;
+            dueDate.textContent = element.dateDisplay;
+            priority.textContent = element.priorityLabel;
+            container.appendChild(title);
+            container.appendChild(priority);
+            container.appendChild(dueDate);
+            container.appendChild(btn);
+            this.right.appendChild(container);
+        })
     }
 
 };
