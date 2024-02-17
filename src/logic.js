@@ -5,19 +5,24 @@ export class Notebook {
         console.log(localStorage.getItem('notes'));
         this.notes = [];
         this.projects = [];
-        if (localStorage.getItem('note') != null) {
-            let _notes = JSON.parse(localStorage.getItem('note') || '[]');
+        if (localStorage.getItem('projects') != null) {
+            let _notes = JSON.parse(localStorage.getItem('notes') || '[]');
             let _projects = JSON.parse(localStorage.getItem('projects') || '[]');
             _projects.forEach(element => {
-                this.projects.push(new Project(element.name));
+                this.addProject(element.name);
             });
             _notes.forEach(element => {
-                this.notes.push(new Note(element.title, element.description, element.dueDate, element.priority, element.projectID));
+                this.addNote(element.title, element.description, element.dueDate, element.priority, element.project);
             });
         }
         else {
             this.addDummyContent();
-        }
+
+        };
+        console.log("projects from JSON:");
+        console.log(this.getProjects());
+        console.log("notes get from JSON");
+        console.log(this.getNotesOfProject(0));
     }
     addNote(title, description, dueDate, priority, projectID) {
         this.projects[projectID].addNote(Note.id);
@@ -58,7 +63,7 @@ export class Notebook {
         this.projects[projectID].notes.splice(noteInProjectID, 1);
     }
     saveStorage() {
-        localStorage.setItem('note', JSON.stringify(this.notes));
+        localStorage.setItem('notes', JSON.stringify(this.notes));
         localStorage.setItem('projects', JSON.stringify(this.projects));
         console.log("Saved!");
     }
@@ -77,7 +82,7 @@ export class Notebook {
         this.addNote('title4', 'desc', '2024-10-20', '1', 1);
         this.addNote('title5', 'desc', '2024-10-21', '0', 1);
         this.addNote('title6', 'desc', '2024-10-20', '0', 1);
-        console.log('NOTES:');
+        console.log('Added dummy notes:');
         console.log(this.projects[0].notes);
         console.log(this.notes);
     }

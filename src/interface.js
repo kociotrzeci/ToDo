@@ -42,9 +42,9 @@ export class Display {
             this.createForm(projectForm);
         })
         this.left.appendChild(btn);
+        this.notebook.saveStorage();
     }
     refreshRight() {
-        console.trace();
         while (this.right.lastChild) {
             this.right.removeChild(this.right.lastChild);
         };
@@ -56,6 +56,7 @@ export class Display {
             this.createForm(noteForm);
         });
         this.right.appendChild(btn);
+        this.notebook.saveStorage();
     }
     text() {
         this.notebook.test();
@@ -135,7 +136,11 @@ export class Display {
         formContainer.remove();
     }
     displayNotes() {
+        console.log("dupa");
+        console.log(this.notebook.getNotesOfProject());
+        console.log("dupa");
         this.notebook.getNotesOfProject(this.selectedProject).forEach(element => {
+            console.log(element.title);
             const container = document.createElement('div')
             container.className = 'note-card priority-' + element.priorityLabel;
             const title = document.createElement('h4');
