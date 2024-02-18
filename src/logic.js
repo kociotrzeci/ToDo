@@ -6,13 +6,13 @@ export class Notebook {
         this.notes = [];
         this.projects = [];
         if (localStorage.getItem('projects') != null) {
-            let _notes = JSON.parse(localStorage.getItem('notes') || '[]');
             let _projects = JSON.parse(localStorage.getItem('projects') || '[]');
             _projects.forEach(element => {
+                console.log(element);
                 this.addProject(element.name);
-            });
-            _notes.forEach(element => {
-                this.addNote(element.title, element.description, element.dueDate, element.priority, element.project);
+                element.notes.forEach(note => {
+                    this.addNote(note.title, note.description, note.dueDate, note.priority, element.id);
+                });
             });
         }
         else {
@@ -25,8 +25,9 @@ export class Notebook {
         console.log(this.getNotesOfProject(0));
     }
     addNote(title, description, dueDate, priority, projectID) {
-        this.projects[projectID].addNote(Note.id);
-        this.notes.push(new Note(title, description, dueDate, priority, projectID));
+        this.projects[projectID].addNote(title, description, dueDate, priority);
+        const newNote = new Note(title, description, dueDate, priority, projectID);
+        console.log(`new note id: ${newNote.id}`);
 
     }
     addProject(projectName) {
@@ -40,12 +41,7 @@ export class Notebook {
     }
     getNotesOfProject(projectID) {
         if (this.projects[projectID] === undefined) { return }
-        const _notes = [];
-        console.log('get notes of project:')
-        this.projects[projectID].notes.forEach(element => {
-            console.log(this.notes[element]);
-            _notes.push(this.notes[element]);
-        });
+        const _notes = this.projects[projectID].notes;
         const _notesPriority = _notes.sort((a, b) => b.priority - a.priority);
 
         return _notesPriority.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
@@ -57,15 +53,12 @@ export class Notebook {
         const ID = this.projects.map((project) => project.id).indexOf(projectID);
         this.projects.splice(ID, 1);
     }
-    removeNote(_noteID) {
-        const noteID = this.notes.map((note => note.id)).indexOf(_noteID);
-        const projectID = this.projects.map((project) => project.id).indexOf(this.notes[noteID].project);
-        const noteInProjectID = this.projects[projectID].notes.findIndex(note => note.id === _noteID);
-        this.notes.splice(noteID, 1);
-        this.projects[projectID].notes.splice(noteInProjectID, 1);
+    removeNote(projectID, noteID) {
+        console.log(`remove note - projectID: ${projectID}, noteID: ${noteID}`);
+        const _noteID = this.projects[projectID].notes.map((note) => note.id).indexOf(noteID);
+        this.projects[projectID].notes.splice(_noteID, 1);
     }
     saveStorage() {
-        localStorage.setItem('notes', JSON.stringify(this.notes));
         localStorage.setItem('projects', JSON.stringify(this.projects));
         console.log("Saved!");
     }
@@ -124,8 +117,8 @@ class Project {
         this.id = Project.id;
         Project.id++;
     }
-    addNote(noteID) {
-        this.notes.push(noteID);
+    addNote(title, description, dueDate, priority) {
+        this.notes.push(new Note(title, description, dueDate, priority, this.id));
     }
 }
 

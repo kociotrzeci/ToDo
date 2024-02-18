@@ -147,12 +147,12 @@ export class Display {
         formContainer.remove();
     }
     displayNotes() {
-        console.log(this.notebook.projects[this.selectedProject]);
+        console.log("get notes of project");
+        console.log(this.notebook.projects[this.selectedProject].notes);
         this.notebook.getNotesOfProject(this.selectedProject).forEach(element => {
-            console.log(element.title);
             const container = document.createElement('div');
             container.addEventListener('click', () => {
-                this.editNote(element);
+                this.editNote(element.id);
             });
             container.className = 'note-card priority-' + element.priorityLabel;
             const title = document.createElement('h4');
@@ -163,7 +163,7 @@ export class Display {
             const btn = document.createElement('button');
             btn.addEventListener('click', (event) => {
                 event.stopPropagation();
-                this.notebook.removeNote(element.id)
+                this.notebook.removeNote(this.selectedProject, element.id)
                 console.log(element.id);
                 this.refreshRight();
             });
@@ -179,10 +179,12 @@ export class Display {
         })
     }
 
-    editNote(note) {
-        console.log(note);
-        this.createForm(editNoteFormFactory(note.title, note.description, note.dueDate, note.priority));
-        this.notebook.removeNote(note.id);
+    editNote(noteID) {
+        console.log(`noteID: ${noteID}`);
+        console.log(this.notebook.projects[this.selectedProject].notes);
+        const _noteID = this.notebook.projects[this.selectedProject].notes.map((note) => note.id).indexOf(noteID);
+        this.createForm(editNoteFormFactory(this.notebook.projects[this.selectedProject].notes[_noteID]));
+        this.notebook.removeNote(this.selectedProject, noteID);
     };
 }
 
@@ -225,17 +227,17 @@ const noteForm = {
     }
 };
 
-function editNoteFormFactory(title, description, dueDate, priority) {
+function editNoteFormFactory(note) {
     const noteForm = {
         title: {
             type: 'text',
             label: 'Note name:',
-            value: title
+            value: note.title
         },
         description: {
             type: 'text',
             label: 'Description:',
-            value: description
+            value: note.description
         },
         optionsRadio: {
             options: [
@@ -244,12 +246,12 @@ function editNoteFormFactory(title, description, dueDate, priority) {
                 { value: '0', label: 'Low' }
             ],
             label: 'Priority:',
-            value: priority
+            value: note.priority
         },
         dueDate: {
             type: 'date',
             label: 'Due date:',
-            value: new Date(dueDate).toISOString().split('T')[0]
+            value: new Date(note.dueDate).toISOString().split('T')[0]
         }
     };
     return noteForm;
