@@ -1,3 +1,5 @@
+import "date-fns"
+var dateFNS = new Date();
 export class Display {
     constructor(notebook) {
         this.left = document.getElementById('left-panel');
@@ -53,6 +55,7 @@ export class Display {
         btn.textContent = 'Add note';
         btn.classList.add('note-card');
         btn.addEventListener('click', (event) => {
+            event.stopPropagation();
             this.createForm(noteForm);
         });
         this.right.appendChild(btn);
@@ -84,14 +87,21 @@ export class Display {
                     const optionElement = document.createElement('option');
                     optionElement.value = option.value;
                     optionElement.textContent = option.label;
+                    if (option.value === element.value) {
+                        console.log("tony halik")
+                        optionElement.selected = true;
+                    }
+                    select.appendChild(optionElement);
                     select.appendChild(optionElement);
                 });
+
                 div.appendChild(select);
             }
             else {
                 const inputElement = document.createElement('input');
                 inputElement.type = element.type;
                 inputElement.id = key;
+                inputElement.value = element.value;
                 div.appendChild(inputElement);
             }
             formContainer.appendChild(div);
@@ -102,7 +112,7 @@ export class Display {
         submitButton.addEventListener('click', (event) => {
             event.preventDefault();
             const formData = {};
-            const formInputs = formContainer.querySelectorAll('.form-group input, .form-group select'); // Select all input and select elements within the form
+            const formInputs = formContainer.querySelectorAll('.form-group input, .form-group select');
             formInputs.forEach(input => {
                 formData[input.id] = input.value;
 
@@ -127,6 +137,7 @@ export class Display {
             this.notebook.addProject(formInput.name);
             this.refreshLeft();
         }
+        console.log('submit');
         this.hideForm();
     }
     hideForm() {
@@ -136,12 +147,13 @@ export class Display {
         formContainer.remove();
     }
     displayNotes() {
-        console.log("dupa");
-        console.log(this.notebook.getNotesOfProject());
-        console.log("dupa");
+        console.log(this.notebook.projects[this.selectedProject]);
         this.notebook.getNotesOfProject(this.selectedProject).forEach(element => {
             console.log(element.title);
-            const container = document.createElement('div')
+            const container = document.createElement('div');
+            container.addEventListener('click', () => {
+                this.editNote(element);
+            });
             container.className = 'note-card priority-' + element.priorityLabel;
             const title = document.createElement('h4');
             const priority = document.createElement('p')
@@ -149,7 +161,8 @@ export class Display {
             dueDate.className = 'date';
             title.className = 'note-title';
             const btn = document.createElement('button');
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', (event) => {
+                event.stopPropagation();
                 this.notebook.removeNote(element.id)
                 console.log(element.id);
                 this.refreshRight();
@@ -166,7 +179,16 @@ export class Display {
         })
     }
 
-};
+    editNote(note) {
+        console.log(note);
+        this.createForm(editNoteFormFactory(note.title, note.description, note.dueDate, note.priority));
+        this.notebook.removeNote(note.id);
+    };
+}
+
+
+
+
 
 const projectForm = {
     name: {
@@ -178,11 +200,13 @@ const projectForm = {
 const noteForm = {
     title: {
         type: 'text',
-        label: 'Note name:'
+        label: 'Note name:',
+        value: ''
     },
     description: {
         type: 'text',
-        label: 'Description:'
+        label: 'Description:',
+        value: ''
     },
     optionsRadio: {
         options: [
@@ -190,12 +214,44 @@ const noteForm = {
             { value: '1', label: 'Medium' },
             { value: '0', label: 'Low' }
         ],
-        label: 'Priority:'
+        label: 'Priority:',
+        value: '1'
 
     },
     dueDate: {
-        type: 'date',
         label: 'Due date:',
+        value: new Date().toISOString().split('T')[0]
+
     }
 };
 
+function editNoteFormFactory(title, description, dueDate, priority) {
+    const noteForm = {
+        title: {
+            type: 'text',
+            label: 'Note name:',
+            value: title
+        },
+        description: {
+            type: 'text',
+            label: 'Description:',
+            value: description
+        },
+        optionsRadio: {
+            options: [
+                { value: '2', label: 'High' },
+                { value: '1', label: 'Medium' },
+                { value: '0', label: 'Low' }
+            ],
+            label: 'Priority:',
+            value: priority
+        },
+        dueDate: {
+            type: 'date',
+            label: 'Due date:',
+            value: new Date(dueDate).toISOString().split('T')[0]
+        }
+    };
+    return noteForm;
+
+}

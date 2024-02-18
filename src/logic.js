@@ -40,8 +40,10 @@ export class Notebook {
     }
     getNotesOfProject(projectID) {
         if (this.projects[projectID] === undefined) { return }
-        const _notes = []
+        const _notes = [];
+        console.log('get notes of project:')
         this.projects[projectID].notes.forEach(element => {
+            console.log(this.notes[element]);
             _notes.push(this.notes[element]);
         });
         const _notesPriority = _notes.sort((a, b) => b.priority - a.priority);
@@ -70,18 +72,24 @@ export class Notebook {
     addDummyContent() {
         this.addProject('Project 1');
         this.addProject('Project 2');
-        this.addNote('title0', 'desc', '2024-10-20', '0', 0);
-        this.addNote('title1', 'desc', '2024-10-21', '2', 0);
-        this.addNote('title2', 'desc', '2024-10-22', '2', 0);
-        this.addNote('title3', 'desc', '2024-10-22', '1', 0);
-        this.addNote('title4', 'desc', '2024-10-23', '0', 0);
-        this.addNote('title5', 'desc', '2024-10-21', '0', 0);
-        this.addNote('title6', 'desc', '2024-10-20', '1', 0);
-        this.addNote('title2', 'desc', '2024-10-23', '1', 0);
-        this.addNote('title3', 'desc', '2024-10-22', '2', 1);
-        this.addNote('title4', 'desc', '2024-10-20', '1', 1);
-        this.addNote('title5', 'desc', '2024-10-21', '0', 1);
-        this.addNote('title6', 'desc', '2024-10-20', '0', 1);
+        this.addNote('title1', 'desc', '2024-10-20', '1', 0);
+        this.addNote('title2', 'desc', '2024-10-20', '1', 0);
+        this.addNote('title3', 'desc', '2024-10-20', '1', 0);
+        this.addNote('title4', 'desc', '2024-10-20', '1', 0);
+
+        /*        this.addNote('title0', 'desc', '2024-10-20', '0', 0);
+                this.addNote('title1', 'desc', '2024-10-21', '2', 0);
+                this.addNote('title2', 'desc', '2024-10-22', '2', 0);
+                this.addNote('title3', 'desc', '2024-10-22', '1', 0);
+                this.addNote('title4', 'desc', '2024-10-23', '0', 0);
+                this.addNote('title5', 'desc', '2024-10-21', '0', 0);
+                this.addNote('title6', 'desc', '2024-10-20', '1', 0);
+                this.addNote('title2', 'desc', '2024-10-23', '1', 0);
+                this.addNote('title3', 'desc', '2024-10-22', '2', 1);
+                this.addNote('title4', 'desc', '2024-10-20', '1', 1);
+                this.addNote('title5', 'desc', '2024-10-21', '0', 1);
+                this.addNote('title6', 'desc', '2024-10-20', '0', 1);
+                */
         console.log('Added dummy notes:');
         console.log(this.projects[0].notes);
         console.log(this.notes);
