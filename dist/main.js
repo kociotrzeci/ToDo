@@ -116,7 +116,7 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.scss */ \"./src/styles.scss\");\n/* harmony import */ var _logic_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./logic.js */ \"./src/logic.js\");\n/* harmony import */ var _interface__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./interface */ \"./src/interface.js\");\n\r\n\r\n\r\n\r\n\r\nconst notebook = new _logic_js__WEBPACK_IMPORTED_MODULE_1__.Notebook();\r\nconst display = new _interface__WEBPACK_IMPORTED_MODULE_2__.Display(notebook);\r\ndisplay.refreshLeft();\r\ndisplay.refreshRight();\r\nnotebook.saveStorage();\r\ndisplay.editNote(0);\n\n//# sourceURL=webpack://todo/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.scss */ \"./src/styles.scss\");\n/* harmony import */ var _logic_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./logic.js */ \"./src/logic.js\");\n/* harmony import */ var _interface__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./interface */ \"./src/interface.js\");\n\r\n\r\n\r\n\r\n\r\nconst notebook = new _logic_js__WEBPACK_IMPORTED_MODULE_1__.Notebook();\r\nconst display = new _interface__WEBPACK_IMPORTED_MODULE_2__.Display(notebook);\r\ndisplay.refreshLeft();\r\ndisplay.refreshRight();\r\nnotebook.saveStorage();\n\n//# sourceURL=webpack://todo/./src/index.js?");
 
 /***/ }),
 
