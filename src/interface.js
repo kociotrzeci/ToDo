@@ -206,7 +206,7 @@ const noteForm = {
         value: ''
     },
     description: {
-        type: 'text',
+        type: 'textarea',
         label: 'Description:',
         value: ''
     },
@@ -235,7 +235,7 @@ function editNoteFormFactory(note) {
             value: note.title
         },
         description: {
-            type: 'text',
+            type: 'textarea',
             label: 'Description:',
             value: note.description
         },

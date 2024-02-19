@@ -194,48 +194,16 @@ body {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         width: 300px;
         z-index: 1001; // Ensures it's above the backdrop
+        gap: 5px;
 
-        form {
-            .form-group {
-                margin-bottom: 15px;
+        .form-group {
 
-                label {
-                    display: block;
-                    margin-bottom: 5px;
-                }
+            #description {
+                display: block;
+                height: 100px;
+                overflow-wrap: break-word;
+                overflow-y: scroll;
 
-                input[type="text"],
-                input[type="date"],
-                select {
-                    width: 100%;
-                    padding: 8px;
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                    box-sizing: border-box;
-                }
-
-                .radio-group {
-                    input[type="radio"] {
-                        margin-right: 5px;
-                    }
-
-                    label {
-                        margin-right: 10px;
-                    }
-                }
-            }
-
-            button[type="submit"] {
-                background-color: #007bff;
-                color: #fff;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-
-                &:hover {
-                    background-color: #0056b3;
-                }
             }
         }
     }
