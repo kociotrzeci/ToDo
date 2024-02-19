@@ -8,4 +8,3 @@ const display = new Display(notebook);
 display.refreshLeft();
 display.refreshRight();
 notebook.saveStorage();
-display.editNote(0);
