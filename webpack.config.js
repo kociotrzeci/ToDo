@@ -8,7 +8,7 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Replace this',
+            template: './src/index.html'
         }),
     ],
     module: {
