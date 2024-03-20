@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import "./styles.scss";
 const intervalTime = 5000;
 const button = document.querySelector("button");
@@ -72,3 +73,19 @@ rightButton.addEventListener("click", () => {
 carousel.interval = setInterval(function () {
   carousel.move("right");
 }, intervalTime);
+=======
+<<<<<<< HEAD
+import "./styles.scss";
+=======
+import "./styles.scss";
+import { Notebook } from './logic.js';
+import { Display } from './interface'
+
+
+const notebook = new Notebook();
+const display = new Display(notebook);
+display.refreshLeft();
+display.refreshRight();
+notebook.saveStorage();
+>>>>>>> 1a1c2cc4b4d9132947ec4a5bb6dff43bc8b34e22
+>>>>>>> 167a4e55a73f3c95e395aa46c77016269562cdd7

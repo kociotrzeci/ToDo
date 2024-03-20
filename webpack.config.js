@@ -5,6 +5,7 @@ module.exports = {
   mode: "development",
   entry: "./src/index.js",
 
+<<<<<<< HEAD
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
@@ -21,6 +22,12 @@ module.exports = {
         test: /\.scss$/i,
         use: ["style-loader", "css-loader", "sass-loader"],
       },
+=======
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html'
+        }),
+>>>>>>> 167a4e55a73f3c95e395aa46c77016269562cdd7
     ],
   },
   output: {
